@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/igExmaples/NetworkRigidbody/Scenes/Main.unity
+    path: Assets/igExmaples/Rigidbody/Scenes/Main.unity
     guid: 78caba86f1b4b8c41a22a9624feead27
   m_configObjects: {}
