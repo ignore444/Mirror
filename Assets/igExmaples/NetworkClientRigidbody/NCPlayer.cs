@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
+using Mirror.Experimental;
 using UnityEngine;
 
 public class NCPlayer : NetworkBehaviour
 {
     public Rigidbody rd;
+    public NCNetworkLerpRigidbody networkrd;
 
     [Header("Movement Settings")]
     public float moveSpeed = 8f;
@@ -24,7 +26,8 @@ public class NCPlayer : NetworkBehaviour
 
     public override void OnStartClient()
     {
-        rd.isKinematic = true;
+        networkrd.target = new NCNetworkRigidbodyTransform() { target = rd };
+        rd.isKinematic = false;
     }
 
     enum EServerPhysicsMethods
@@ -36,20 +39,24 @@ public class NCPlayer : NetworkBehaviour
 
     public override void OnStartServer()
     {
-        EServerPhysicsMethods method = EServerPhysicsMethods.Rigidbody;
+        EServerPhysicsMethods method = EServerPhysicsMethods.PhysicsOff;
 
         switch( method )
         {
             case EServerPhysicsMethods.Rigidbody:
                 rd.isKinematic = false;
+                networkrd.target = new NCNetworkRigidbodyTransform() { target = rd };
                 break;
 
             case EServerPhysicsMethods.Kinematic:
                 rd.isKinematic = true;
+                networkrd.target = new NCNetworkRigidbodyTransform() { target = rd };
                 break;
 
             case EServerPhysicsMethods.PhysicsOff:
                 Destroy(rd);
+                networkrd.target = new NCNetworkObjectTransform() { target = gameObject.transform };
+                Physics.autoSimulation = false;
                 break;
 
             default:

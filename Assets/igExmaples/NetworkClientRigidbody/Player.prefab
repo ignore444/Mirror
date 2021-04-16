@@ -112,6 +112,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   rd: {fileID: 6533651804168222850}
+  networkrd: {fileID: 6533651804168222852}
   moveSpeed: 1
   turnSensitivity: 5
   turnSpeed: 30
@@ -170,7 +171,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  target: {fileID: 6533651804168222850}
   lerpVelocityAmount: 0.5
   lerpPositionAmount: 0.5
   clientAuthority: 1

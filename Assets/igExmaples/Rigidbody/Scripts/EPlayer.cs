@@ -72,6 +72,7 @@ public class EPlayer : MonoBehaviour
                 rigidbody.AddForce(impluse, ForceMode.Impulse);
             }
 
+            /*
             if (false)
             {// transform
                 Vector3 speed = new Vector3(horizontal, 0f, vertical);
@@ -79,6 +80,7 @@ public class EPlayer : MonoBehaviour
                 distance = move;
                 transform.Translate(move,Space.World);
             }
+            */
         }
     }
 

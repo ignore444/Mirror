@@ -2,10 +2,39 @@ using UnityEngine;
 
 namespace Mirror.Experimental
 {
+    public interface NCNetworkTransform
+    {
+        Vector3 velocity { get; set; }
+        Vector3 position { get; set; }
+        Vector3 angularVelocity { get; set; }
+        Quaternion rotation { get; set; }
+    }
+
+    public class NCNetworkRigidbodyTransform : NCNetworkTransform
+    {
+        public Rigidbody target;
+
+        public Vector3 velocity { get => target.velocity; set => target.velocity = value; }
+        public Vector3 position { get => target.position; set => target.position = value; }
+        public Vector3 angularVelocity { get => target.angularVelocity; set => target.angularVelocity = value; }
+        public Quaternion rotation { get => target.rotation; set => target.rotation = value; }
+    }
+
+    public class NCNetworkObjectTransform : NCNetworkTransform
+    {
+        public Transform target;
+        float temp;
+
+        public Vector3 velocity { get => Vector3.zero; set => temp = value.x; }
+        public Vector3 position { get => target.position; set => target.position = value; }
+        public Vector3 angularVelocity { get => Vector3.zero; set => temp = value.x; }
+        public Quaternion rotation { get => target.rotation; set => target.rotation = value; }
+    }
+
     public class NCNetworkLerpRigidbody : NetworkBehaviour
     {
-        [Header("Settings")]
-        [SerializeField] internal Rigidbody target = null;
+        internal NCNetworkTransform target = null;
+
         [Tooltip("How quickly current velocity approaches target velocity")]
         [SerializeField] float lerpVelocityAmount = 0.5f;
         [Tooltip("How quickly current position approaches target position")]
@@ -36,14 +65,6 @@ namespace Mirror.Experimental
         bool IgnoreSync => isServer || ClientWithAuthority;
 
         bool ClientWithAuthority => clientAuthority && hasAuthority;
-
-        void OnValidate()
-        {
-            if (target == null)
-            {
-                target = GetComponent<Rigidbody>();
-            }
-        }
 
         void Update()
         {
