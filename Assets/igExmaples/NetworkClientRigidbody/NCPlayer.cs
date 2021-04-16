@@ -10,7 +10,7 @@ public class NCPlayer : NetworkBehaviour
     public NCNetworkLerpRigidbody networkrd;
 
     [Header("Movement Settings")]
-    public float moveSpeed = 8f;
+    public float moveSpeed = 40f;
     public float turnSensitivity = 5f;
     public float turnSpeed = 30f;
 
@@ -39,7 +39,7 @@ public class NCPlayer : NetworkBehaviour
 
     public override void OnStartServer()
     {
-        EServerPhysicsMethods method = EServerPhysicsMethods.PhysicsOff;
+        EServerPhysicsMethods method = EServerPhysicsMethods.Rigidbody;
 
         switch( method )
         {
@@ -100,12 +100,12 @@ public class NCPlayer : NetworkBehaviour
         Vector3 delta = new Vector3(horizontal, jump, vertical);
         if (delta.Equals(Vector3.zero) == false)
         {
-            rd.AddForce(delta * moveSpeed, ForceMode.Impulse);
+            rd.AddForce(delta * moveSpeed * Time.deltaTime , ForceMode.Impulse);
         }
 
         if (angularDelta != 0f)
         {
-            rd.AddRelativeTorque(transform.up * angularDelta * moveSpeed * 0.3f);
+            rd.AddRelativeTorque(transform.up * angularDelta * moveSpeed * Time.deltaTime);
         }
     }
 }

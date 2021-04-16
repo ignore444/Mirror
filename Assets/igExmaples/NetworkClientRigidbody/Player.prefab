@@ -113,7 +113,7 @@ MonoBehaviour:
   syncInterval: 0.1
   rd: {fileID: 6533651804168222850}
   networkrd: {fileID: 6533651804168222852}
-  moveSpeed: 1
+  moveSpeed: 40
   turnSensitivity: 5
   turnSpeed: 30
   horizontal: 0
