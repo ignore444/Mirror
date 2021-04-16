@@ -93,6 +93,6 @@ public class NPlayerController : NetworkBehaviour
     [Command]
     void Turn(float angularDelta)
     {
-        rd.AddRelativeTorque(transform.up * angularDelta * moveSpeed);
+        rd.AddRelativeTorque(transform.up * angularDelta * moveSpeed * 0.3f);
     }
 }
