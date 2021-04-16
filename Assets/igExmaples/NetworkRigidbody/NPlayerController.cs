@@ -34,19 +34,15 @@ public class NPlayerController : NetworkBehaviour
             rd.isKinematic = false;
         }
     }
-    public override void OnStartLocalPlayer()
-    {
-        Camera.main.orthographic = false;
-        Camera.main.transform.SetParent(transform);
-        Camera.main.transform.localPosition = new Vector3(0f, 3f, -8f);
-        Camera.main.transform.localEulerAngles = new Vector3(10f, 0f, 0f);
-    }
-
     
     void Update()
     {
         if (!isLocalPlayer)
             return;
+
+        Camera.main.orthographic = false;
+        Camera.main.transform.position = transform.position - 5f * transform.forward + new Vector3(0f,2f,0f);
+        Camera.main.transform.LookAt(transform);
 
         if (NetworkClient.active == false)
             return;
